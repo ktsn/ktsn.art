@@ -3,7 +3,8 @@ import { ref, computed, watch } from 'vue'
 
 export interface Illust {
   key: string
-  imageUrl: string
+  originalUrl: string
+  displayUrl: string
   thumbnailUrl: string
   createdAt: Date
 }
@@ -22,12 +23,14 @@ export function useIllusts() {
         const data = illustRef.val()
 
         Promise.all([
-          storage.ref(data.image).getDownloadURL(),
-          storage.ref(data.thumbnail).getDownloadURL(),
-        ]).then(([imageUrl, thumbnailUrl]) => {
+          storage.ref(data.originalImage).getDownloadURL(),
+          storage.ref(data.displayImage).getDownloadURL(),
+          storage.ref(data.thumbnailImage).getDownloadURL(),
+        ]).then(([originalUrl, displayUrl, thumbnailUrl]) => {
           temp.value.push({
             key: illustRef.key ?? '',
-            imageUrl,
+            originalUrl,
+            displayUrl,
             thumbnailUrl,
             createdAt: new Date(data.createdAt),
           })
