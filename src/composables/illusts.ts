@@ -28,7 +28,7 @@ export function useIllusts() {
           storage.ref(data.thumbnailImage).getDownloadURL(),
         ]).then(([originalUrl, displayUrl, thumbnailUrl]) => {
           temp.value.push({
-            key: illustRef.key ?? '',
+            key: illustRef.key || '',
             originalUrl,
             displayUrl,
             thumbnailUrl,
