@@ -20,7 +20,7 @@
     <h2 class="px-10 mb-1">{{ year }} ({{ group.length }} illusts)</h2>
 
     <ul
-      class="grid grid-flow-row xl:grid-cols-6 lg:grid-cols-5 md:grid-cols-4 sm:grid-cols-3 grid-cols-2"
+      class="grid gap-1 grid-flow-row xl:grid-cols-6 lg:grid-cols-5 md:grid-cols-4 sm:grid-cols-3 grid-cols-2"
     >
       <transition
         v-for="{ index, illust } in group"
@@ -28,12 +28,10 @@
         enter-active-class="transition duration-1000"
         enter-from-class="opacity-0"
         enter-to-class="opacity-100"
+        appear
       >
-        <li
-          v-show="startTransition"
-          :style="{ transitionDelay: 50 * index + 'ms' }"
-        >
-          <VThumbnail :src="illust.thumbnail" :ratio="1 / 1" />
+        <li :style="{ transitionDelay: 50 * index + 'ms' }">
+          <VThumbnail :src="illust.thumbnailUrl" :ratio="1 / 1" />
         </li>
       </transition>
     </ul>
@@ -41,137 +39,22 @@
 </template>
 
 <script lang="ts">
-import { Vue, Options } from 'vue-class-component'
+import { Vue, Options, setup } from 'vue-class-component'
 import VTextLink from '../components/VTextLink.vue'
 import VThumbnail from '../components/VThumbnail.vue'
-
-interface Illust {
-  thumbnail: string
-  createdAt: Date
-}
+import { useIllusts, Illust } from '../composables/illusts'
 
 class Home extends Vue {
-  startTransition = false
+  illusts = setup(useIllusts)
 
-  illustLinks = ['2020', '2019', '2018']
-
-  illusts = [
-    {
-      thumbnail: 'https://via.placeholder.com/300x300',
-      createdAt: new Date('2020-01-01'),
-    },
-    {
-      thumbnail: 'https://via.placeholder.com/300x300',
-      createdAt: new Date('2020-01-01'),
-    },
-    {
-      thumbnail: 'https://via.placeholder.com/300x300',
-      createdAt: new Date('2020-01-01'),
-    },
-    {
-      thumbnail: 'https://via.placeholder.com/300x300',
-      createdAt: new Date('2020-01-01'),
-    },
-    {
-      thumbnail: 'https://via.placeholder.com/300x300',
-      createdAt: new Date('2020-01-01'),
-    },
-    {
-      thumbnail: 'https://via.placeholder.com/300x300',
-      createdAt: new Date('2020-01-01'),
-    },
-    {
-      thumbnail: 'https://via.placeholder.com/300x300',
-      createdAt: new Date('2020-01-01'),
-    },
-    {
-      thumbnail: 'https://via.placeholder.com/300x300',
-      createdAt: new Date('2020-01-01'),
-    },
-    {
-      thumbnail: 'https://via.placeholder.com/300x300',
-      createdAt: new Date('2020-01-01'),
-    },
-    {
-      thumbnail: 'https://via.placeholder.com/300x300',
-      createdAt: new Date('2020-01-01'),
-    },
-    {
-      thumbnail: 'https://via.placeholder.com/300x300',
-      createdAt: new Date('2020-01-01'),
-    },
-
-    {
-      thumbnail: 'https://via.placeholder.com/300x300',
-      createdAt: new Date('2019-01-01'),
-    },
-    {
-      thumbnail: 'https://via.placeholder.com/300x300',
-      createdAt: new Date('2019-01-01'),
-    },
-    {
-      thumbnail: 'https://via.placeholder.com/300x300',
-      createdAt: new Date('2019-01-01'),
-    },
-    {
-      thumbnail: 'https://via.placeholder.com/300x300',
-      createdAt: new Date('2019-01-01'),
-    },
-    {
-      thumbnail: 'https://via.placeholder.com/300x300',
-      createdAt: new Date('2019-01-01'),
-    },
-    {
-      thumbnail: 'https://via.placeholder.com/300x300',
-      createdAt: new Date('2019-01-01'),
-    },
-    {
-      thumbnail: 'https://via.placeholder.com/300x300',
-      createdAt: new Date('2019-01-01'),
-    },
-    {
-      thumbnail: 'https://via.placeholder.com/300x300',
-      createdAt: new Date('2019-01-01'),
-    },
-    {
-      thumbnail: 'https://via.placeholder.com/300x300',
-      createdAt: new Date('2019-01-01'),
-    },
-    {
-      thumbnail: 'https://via.placeholder.com/300x300',
-      createdAt: new Date('2019-01-01'),
-    },
-
-    {
-      thumbnail: 'https://via.placeholder.com/300x300',
-      createdAt: new Date('2018-01-01'),
-    },
-    {
-      thumbnail: 'https://via.placeholder.com/300x300',
-      createdAt: new Date('2018-01-01'),
-    },
-    {
-      thumbnail: 'https://via.placeholder.com/300x300',
-      createdAt: new Date('2018-01-01'),
-    },
-    {
-      thumbnail: 'https://via.placeholder.com/300x300',
-      createdAt: new Date('2018-01-01'),
-    },
-    {
-      thumbnail: 'https://via.placeholder.com/300x300',
-      createdAt: new Date('2018-01-01'),
-    },
-    {
-      thumbnail: 'https://via.placeholder.com/300x300',
-      createdAt: new Date('2018-01-01'),
-    },
-  ]
+  get illustLinks() {
+    return Array.from(this.illustGroups.keys()).sort((a, b) => b - a)
+  }
 
   get illustGroups() {
     const groups = new Map<number, { index: number; illust: Illust }[]>()
 
-    this.illusts
+    this.illusts.result
       .slice()
       .sort((a, b) => {
         return b.createdAt.getTime() - a.createdAt.getTime()
@@ -191,13 +74,6 @@ class Home extends Vue {
       })
 
     return groups
-  }
-
-  mounted() {
-    // FIXME: To make initial transition work.
-    setTimeout(() => {
-      this.startTransition = true
-    }, 10)
   }
 }
 
