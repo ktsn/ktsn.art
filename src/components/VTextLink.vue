@@ -1,19 +1,19 @@
 <template>
-  <button
-    class="py-2 px-4 rounded bg-green-500 hover:bg-green-400 text-white transition duration-200 ease-out"
+  <router-link
+    class="text-gray-600 hover:text-gray-900 transition duration-200 ease-out"
     v-bind="$attrs"
   >
     <slot />
-  </button>
+  </router-link>
 </template>
 
 <script lang="ts">
 import { Vue, Options } from 'vue-class-component'
 
-class VButton extends Vue {}
+class VTextLink extends Vue {}
 
 export default Options({
-  name: 'VButton',
+  name: 'VTextLink',
   inheritAttrs: false,
-})(VButton)
+})(VTextLink)
 </script>
