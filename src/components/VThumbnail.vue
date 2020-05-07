@@ -1,26 +1,52 @@
 <template>
   <div class="relative w-full bg-gray-200" :style="{ paddingTop }">
     <transition
-      enter-active-class="transition duration-200"
+      enter-active-class="transition duration-1000"
       enter-from-class="opacity-0"
       enter-to-class="opacity-100"
     >
       <img
-        v-show="loaded"
+        v-show="manager.allLoaded"
         class="absolute inset-0 w-full h-full"
+        :style="{ transitionDelay: appearDelay + 'ms' }"
         v-bind="$attrs"
-        @load="loaded = true"
+        @load="manager.loaded(id)"
       />
     </transition>
   </div>
 </template>
 
 <script lang="ts">
-import { Vue, Options } from 'vue-class-component'
+import { Vue, Options, setup } from 'vue-class-component'
+import { Ref, inject, onBeforeUnmount } from 'vue'
+
+interface Manager {
+  register(id: number): void
+  unregister(id: number): void
+  loaded(id: number): void
+  readonly allLoaded: Ref<boolean>
+}
+
+let uid = 0
 
 class VThumbnail extends Vue {
   ratio!: number
+  appearDelay!: number
+
+  id: number = ++uid
   loaded: boolean = false
+
+  manager = setup(() => {
+    const manager = inject<Manager>('thumbnailGroup')!
+
+    manager.register(this.id)
+
+    onBeforeUnmount(() => {
+      manager.unregister(this.id)
+    })
+
+    return manager
+  })
 
   $refs!: {
     image: HTMLImageElement
@@ -39,6 +65,11 @@ export default Options({
     ratio: {
       type: Number,
       default: 1,
+    },
+
+    appearDelay: {
+      type: Number,
+      default: 0,
     },
   },
 })(VThumbnail)

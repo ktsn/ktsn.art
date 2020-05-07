@@ -22,18 +22,15 @@
     <ul
       class="grid gap-1 grid-flow-row xl:grid-cols-6 lg:grid-cols-5 md:grid-cols-4 sm:grid-cols-3 grid-cols-2"
     >
-      <transition
-        v-for="{ index, illust } in group"
-        :key="index"
-        enter-active-class="transition duration-1000"
-        enter-from-class="opacity-0"
-        enter-to-class="opacity-100"
-        appear
-      >
-        <li :style="{ transitionDelay: 50 * index + 'ms' }">
-          <VThumbnail :src="illust.thumbnailUrl" :ratio="1 / 1" />
+      <VThumbnailGroup>
+        <li v-for="(illust, index) in group" :key="index">
+          <VThumbnail
+            :src="illust.thumbnailUrl"
+            :ratio="1 / 1"
+            :appear-delay="50 * index"
+          />
         </li>
-      </transition>
+      </VThumbnailGroup>
     </ul>
   </section>
 </template>
@@ -42,6 +39,7 @@
 import { Vue, Options, setup } from 'vue-class-component'
 import VTextLink from '../components/VTextLink.vue'
 import VThumbnail from '../components/VThumbnail.vue'
+import VThumbnailGroup from '../components/VThumbnailGroup.vue'
 import { useIllusts, Illust } from '../composables/illusts'
 
 class Home extends Vue {
@@ -52,14 +50,14 @@ class Home extends Vue {
   }
 
   get illustGroups() {
-    const groups = new Map<number, { index: number; illust: Illust }[]>()
+    const groups = new Map<number, Illust[]>()
 
     this.illusts.result
       .slice()
       .sort((a, b) => {
         return b.createdAt.getTime() - a.createdAt.getTime()
       })
-      .forEach((illust, index) => {
+      .forEach((illust) => {
         const year = illust.createdAt.getFullYear()
         let yearGroup = groups.get(year)
         if (!yearGroup) {
@@ -67,10 +65,7 @@ class Home extends Vue {
           groups.set(year, yearGroup)
         }
 
-        yearGroup.push({
-          index,
-          illust,
-        })
+        yearGroup.push(illust)
       })
 
     return groups
@@ -83,6 +78,7 @@ export default Options({
   components: {
     VTextLink,
     VThumbnail,
+    VThumbnailGroup,
   },
 })(Home)
 </script>
