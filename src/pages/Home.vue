@@ -24,11 +24,13 @@
     >
       <VThumbnailGroup>
         <li v-for="(illust, index) in group" :key="index">
-          <VThumbnail
-            :src="illust.thumbnailUrl"
-            :ratio="1 / 1"
-            :appear-delay="50 * index"
-          />
+          <router-link class="block" :to="'/' + illust.key">
+            <VThumbnail
+              :src="illust.thumbnailUrl"
+              :ratio="1 / 1"
+              :appear-delay="50 * index"
+            />
+          </router-link>
         </li>
       </VThumbnailGroup>
     </ul>
