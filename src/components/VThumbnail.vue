@@ -14,7 +14,7 @@
         class="absolute inset-0 w-full h-full"
         :style="{ transitionDelay: appearDelay + 'ms' }"
         v-bind="$attrs"
-        @load="manager.loaded(id)"
+        @load="manager.loaded()"
       />
     </transition>
   </div>
@@ -22,35 +22,13 @@
 
 <script lang="ts">
 import { Vue, Options, setup } from 'vue-class-component'
-import { Ref, inject, onBeforeUnmount } from 'vue'
-
-interface Manager {
-  register(id: number): void
-  unregister(id: number): void
-  loaded(id: number): void
-  readonly allLoaded: Ref<boolean>
-}
-
-let uid = 0
+import { useLoadingItem } from '../composables/loading-group'
 
 class VThumbnail extends Vue {
   ratio!: number
   appearDelay!: number
 
-  id: number = ++uid
-  loaded: boolean = false
-
-  manager = setup(() => {
-    const manager = inject<Manager>('thumbnailGroup')!
-
-    manager.register(this.id)
-
-    onBeforeUnmount(() => {
-      manager.unregister(this.id)
-    })
-
-    return manager
-  })
+  manager = setup(() => useLoadingItem())
 
   $refs!: {
     image: HTMLImageElement
