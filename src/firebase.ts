@@ -1,6 +1,5 @@
 import * as _firebase from 'firebase/app'
 import 'firebase/database'
-import 'firebase/storage'
 import 'firebase/analytics'
 
 const firebase = (_firebase as any).default as typeof _firebase
@@ -20,4 +19,3 @@ firebase.initializeApp(firebaseConfig)
 firebase.analytics()
 
 export const db = firebase.database()
-export const storage = firebase.storage()

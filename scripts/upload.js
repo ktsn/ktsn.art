@@ -5,13 +5,15 @@ const sharp = require('sharp')
 
 const serviceAccount = require('./serviceAccountKey.json')
 
-const thumbnailSize = 300
-
 const firebaseConfig = {
   credential: firebase.credential.cert(serviceAccount),
   databaseURL: 'https://illusts-ktsn-dev-development.firebaseio.com',
   storageBucket: 'illusts-ktsn-dev-development.appspot.com',
 }
+
+const thumbnailSize = 300
+const storagePrefix = `https://firebasestorage.googleapis.com/v0/b/${firebaseConfig.storageBucket}/o/`
+const storageSuffix = '?alt=media'
 
 firebase.initializeApp(firebaseConfig)
 
@@ -62,9 +64,9 @@ module.exports = async function uploadIllust(
     // Save DB record
     newData.then(async (ref) => {
       await ref.set({
-        originalImage: originalPath,
-        displayImage: displayPath,
-        thumbnailImage: thumbnailPath,
+        originalImageUrl: storageUrl(originalPath),
+        displayImageUrl: storageUrl(displayPath),
+        thumbnailImageUrl: storageUrl(thumbnailPath),
         createdAt: createdAt.getTime(),
       })
     }),
@@ -74,4 +76,8 @@ module.exports = async function uploadIllust(
 function upload(path, file) {
   const fileRef = bucket.file(path)
   return fileRef.save(file)
+}
+
+function storageUrl(path) {
+  return `${storagePrefix}${encodeURIComponent(path)}${storageSuffix}`
 }
