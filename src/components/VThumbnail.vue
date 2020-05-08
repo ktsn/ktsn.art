@@ -1,7 +1,11 @@
 <template>
-  <div class="relative w-full bg-gray-200" :style="{ paddingTop }">
+  <div
+    class="relative w-full bg-gray-300"
+    :class="{ loading: !manager.allLoaded }"
+    :style="{ paddingTop }"
+  >
     <transition
-      enter-active-class="transition duration-1000"
+      enter-active-class="transition duration-700"
       enter-from-class="opacity-0"
       enter-to-class="opacity-100"
     >
@@ -74,3 +78,40 @@ export default Options({
   },
 })(VThumbnail)
 </script>
+
+<style scoped>
+.loading {
+  overflow: hidden;
+}
+
+.loading::after {
+  content: '';
+  opacity: 0.3;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 75%;
+  background-image: linear-gradient(
+    90deg,
+    transparent 0,
+    #fff 40%,
+    #fff 60%,
+    transparent
+  );
+  animation: 1000ms cubic-bezier(0.4, 0, 0.6, 1) infinite loading;
+}
+
+@keyframes loading {
+  0% {
+    transform: translateX(-100%);
+  }
+
+  70% {
+    transform: translateX(133%);
+  }
+
+  100% {
+    transform: translateX(133%);
+  }
+}
+</style>
