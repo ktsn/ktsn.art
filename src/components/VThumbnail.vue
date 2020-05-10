@@ -11,7 +11,7 @@
     >
       <img
         v-show="manager.allLoaded"
-        class="absolute inset-0 w-full h-full"
+        class="absolute inset-0 w-full h-full object-cover"
         :style="{ transitionDelay: appearDelay + 'ms' }"
         v-bind="$attrs"
         @load="manager.loaded()"

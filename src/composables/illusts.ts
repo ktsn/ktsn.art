@@ -1,5 +1,5 @@
 import { db } from '../firebase'
-import { ref, computed, watch, Ref, watchEffect } from 'vue'
+import { ref, computed, Ref, watchEffect } from 'vue'
 
 export interface Illust {
   key: string
@@ -39,11 +39,7 @@ export function useIllusts() {
 }
 
 export function useIllust(key: Ref<string>) {
-  const illust = ref<Illust>()
-
-  watch(key, (key) => {
-    illust.value = illusts.value.get(key)
-  })
+  const illust = computed(() => illusts.value.get(key.value))
 
   watchEffect(() => {
     if (illust.value) {
@@ -51,7 +47,8 @@ export function useIllust(key: Ref<string>) {
     }
 
     db.ref(`illusts/${key.value}`).once('value', (snapshot) => {
-      illust.value = snapshotToIllust(snapshot)
+      const data = snapshotToIllust(snapshot)
+      illusts.value.set(data.key, data)
     })
   })
 

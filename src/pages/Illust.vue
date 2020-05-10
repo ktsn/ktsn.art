@@ -1,13 +1,43 @@
 <template>
-  <div @mousemove="onHover" @touchstart="onHover">
-    <div class="absolute inset-0 bg-gray-900" />
+  <div class="fixed inset-0" @mousemove="onHover" @touchstart="onHover">
+    <transition
+      appear
+      enter-active-class="transition ease-out duration-200"
+      enter-from-class="opacity-0"
+      leave-active-class="transition ease-out duration-200"
+      leave-to-class="opacity-0"
+    >
+      <div v-if="!leaving" class="absolute inset-0 bg-gray-900" />
+    </transition>
 
-    <img
-      v-if="illust.result"
-      class="absolute inset-0 w-full h-full object-contain"
-      :src="illust.result.displayUrl"
-      alt=""
-    />
+    <transition
+      appear
+      enter-active-class="transition duration-200 ease-out"
+      enter-from-class="opacity-0 transform scale-75"
+      leave-active-class="transition duration-200 ease-out"
+      leave-to-class="opacity-0 transform scale-75"
+    >
+      <div v-if="illust.result && !leaving" class="absolute inset-0">
+        <img
+          class="absolute inset-0 w-full h-full object-contain"
+          :src="illust.result.thumbnailUrl"
+          alt=""
+        />
+
+        <transition
+          enter-active-class="transition duration-200 ease-out"
+          enter-from-class="opacity-0"
+        >
+          <img
+            v-show="imageLoaded"
+            class="absolute inset-0 w-full h-full object-contain"
+            :src="illust.result.displayUrl"
+            alt=""
+            @load="imageLoaded = true"
+          />
+        </transition>
+      </div>
+    </transition>
 
     <transition
       enter-active-class="transition duration-200 ease-out"
@@ -18,6 +48,7 @@
       leave-to-class="opacity-0"
     >
       <div
+        v-if="!leaving"
         v-show="showMenu"
         class="absolute inset-x-0 top-0 bg-black bg-opacity-75 px-5 py-3"
       >
@@ -54,13 +85,21 @@ class Illust extends Vue {
   showMenuTimer: any = undefined
   showMenu: boolean = false
 
+  imageLoaded: boolean = false
+  leaving: boolean = false
+
   onHover() {
     clearTimeout(this.showMenuTimer)
     this.showMenu = true
 
     this.showMenuTimer = setTimeout(() => {
       this.showMenu = false
-    }, 3000)
+    }, 2000)
+  }
+
+  beforeRouteLeave(_to: unknown, _from: unknown, next: () => void) {
+    this.leaving = true
+    next()
   }
 }
 
