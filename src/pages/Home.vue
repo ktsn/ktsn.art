@@ -1,6 +1,6 @@
 <template>
   <div>
-    <header class="px-10 pt-2 mb-5">
+    <header class="px-5 lg:px-10 pt-2 mb-5">
       <ul>
         <li v-for="(link, i) in illustLinks" :key="link" class="inline-block">
           <VTextLink
@@ -21,7 +21,9 @@
       :key="year"
       class="mb-10"
     >
-      <h2 class="px-10 mb-1">{{ year }} ({{ group.length }} illusts)</h2>
+      <h2 class="px-5 lg:px-10 mb-1">
+        {{ year }} ({{ group.length }} illusts)
+      </h2>
 
       <ul
         class="grid gap-1 grid-flow-row xl:grid-cols-6 lg:grid-cols-5 md:grid-cols-4 sm:grid-cols-3 grid-cols-2"
