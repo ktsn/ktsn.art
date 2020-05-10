@@ -51,16 +51,13 @@ export function useImageDialog(exitDialog: () => void) {
       return
     }
 
-    if (deltaY.value === 0) {
-      dragging.value = false
-      return
+    // Clicking or dragging beyond threshold will exit dialog
+    if (deltaY.value === 0 || Math.abs(deltaY.value) > dragThreshold) {
+      exitDialog()
+    } else {
+      cancelDrag()
     }
 
-    if (Math.abs(deltaY.value) < dragThreshold) {
-      cancelDrag()
-    } else {
-      exitDialog()
-    }
     dragging.value = false
   }
 

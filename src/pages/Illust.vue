@@ -27,6 +27,7 @@
         v-if="illust.result && !leaving"
         class="absolute inset-0"
         to="/"
+        @click.prevent
         @pointerdown.prevent="dialog.startDrag"
         @pointermove.prevent="dialog.continueDrag"
         @pointerup.prevent="dialog.endDrag"
