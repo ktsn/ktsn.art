@@ -50,7 +50,7 @@ module.exports = async function uploadIllust(
     fit: 'outside',
   })
   const thumbnailImage = await thumbnail.webp().toBuffer()
-  const thumbnailFallbackImage = await thumbnail.toBuffer()
+  const thumbnailFallbackImage = await thumbnail.png().toBuffer()
 
   await Promise.all([
     upload(originalPath, originalImage),
