@@ -42,13 +42,17 @@
             leave-active-class="transition-all duration-500"
             leave-to-class="blur-0"
           >
-            <VImage
+            <div
               v-if="!imageLoaded"
-              class="absolute inset-0 w-full h-full object-contain blur"
-              :src="illust.result.thumbnailUrl"
-              :src-fallback="illust.result.thumbnailFallbackUrl"
-              alt=""
-            />
+              class="absolute inset-0 w-full h-full blur"
+            >
+              <VImage
+                class="absolute inset-0 w-full h-full object-contain"
+                :src="illust.result.thumbnailUrl"
+                :src-fallback="illust.result.thumbnailFallbackUrl"
+                alt=""
+              />
+            </div>
           </transition>
 
           <transition
