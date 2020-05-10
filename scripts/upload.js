@@ -1,6 +1,5 @@
 const path = require('path')
 const firebase = require('firebase-admin')
-const smartcrop = require('smartcrop-sharp')
 const sharp = require('sharp')
 
 const serviceAccount = require('./serviceAccountKey.json')
@@ -37,22 +36,12 @@ module.exports = async function uploadIllust(
   const thumbnailPath = `illusts/${key}/thumbnail.webp`
   const { width, height } = await sharp(originalImage).metadata()
 
-  // Crop
-  const { topCrop: crop } = await smartcrop.crop(originalImage, {
-    width,
-    height,
-  })
-
   // Convert images
   const displayImage = await sharp(originalImage).webp().toBuffer()
   const thumbnailImage = await sharp(originalImage)
-    .extract({
-      width: crop.width,
-      height: crop.height,
-      left: crop.x,
-      top: crop.y,
+    .resize(thumbnailSize, thumbnailSize, {
+      fit: 'outside',
     })
-    .resize(thumbnailSize, thumbnailSize)
     .webp()
     .toBuffer()
 
