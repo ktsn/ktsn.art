@@ -18,14 +18,20 @@
       leave-to-class="opacity-0 transform scale-75"
     >
       <div v-if="illust.result && !leaving" class="absolute inset-0">
-        <img
-          class="absolute inset-0 w-full h-full object-contain"
-          :src="illust.result.thumbnailUrl"
-          alt=""
-        />
+        <transition
+          leave-active-class="transition-all duration-500"
+          leave-to-class="blur-0"
+        >
+          <img
+            v-if="!imageLoaded"
+            class="absolute inset-0 w-full h-full object-contain blur"
+            :src="illust.result.thumbnailUrl"
+            alt=""
+          />
+        </transition>
 
         <transition
-          enter-active-class="transition duration-200 ease-out"
+          enter-active-class="transition duration-500 ease-out"
           enter-from-class="opacity-0"
         >
           <img
@@ -118,3 +124,13 @@ export default Options({
   },
 })(Illust)
 </script>
+
+<style scoped>
+.blur {
+  filter: blur(4px);
+}
+
+.blur-0 {
+  filter: blur(0);
+}
+</style>
