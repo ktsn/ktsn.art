@@ -1,6 +1,7 @@
 const path = require('path')
 const firebase = require('firebase-admin')
 const sharp = require('sharp')
+const mocks = require('./mocks')
 
 const project =
   process.env.NODE_ENV !== 'production'
@@ -21,8 +22,8 @@ const storageSuffix = '?alt=media'
 
 firebase.initializeApp(firebaseConfig)
 
-const db = firebase.database()
-const bucket = firebase.storage().bucket()
+const db = process.env.DRY_RUN ? mocks.database : firebase.database()
+const bucket = process.env.DRY_RUN ? mocks.bucket : firebase.storage().bucket()
 
 module.exports = async function uploadIllust(
   originalImage,
