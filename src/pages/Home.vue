@@ -3,7 +3,10 @@
     <header class="px-10 pt-2 mb-5">
       <ul>
         <li v-for="(link, i) in illustLinks" :key="link" class="inline-block">
-          <VTextLink :to="'#year_' + link">
+          <VTextLink
+            :to="'#year_' + link"
+            @click.prevent="onClickAnchor('#year_' + link)"
+          >
             {{ link }}
           </VTextLink>
 
@@ -45,6 +48,7 @@
 
 <script lang="ts">
 import { Vue, Options, setup } from 'vue-class-component'
+import jump from 'jump.js'
 import VTextLink from '../components/VTextLink.vue'
 import VThumbnail from '../components/VThumbnail.vue'
 import VThumbnailGroup from '../components/VThumbnailGroup.vue'
@@ -77,6 +81,10 @@ class Home extends Vue {
       })
 
     return groups
+  }
+
+  onClickAnchor(to: string) {
+    jump(to)
   }
 }
 

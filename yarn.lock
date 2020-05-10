@@ -535,6 +535,11 @@
   resolved "https://registry.yarnpkg.com/@types/json-schema/-/json-schema-7.0.4.tgz#38fd73ddfd9b55abb1e1b2ed578cb55bd7b7d339"
   integrity sha512-8+KAKzEvSUdeo+kmqnKrqgeE+LcA0tjYWFY7RPProVYwnqDjukzO+3b6dLD56rYX5TdWejnEOLJYOIeh4CXKuA==
 
+"@types/jump.js@^1.0.3":
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/@types/jump.js/-/jump.js-1.0.3.tgz#fa146aea4cbfdbe01bfc79f1d5c5d153459540e4"
+  integrity sha512-PPBrbkTL2Dfb7DWazS31wGJ9vYRvl6/FLYVQPZUO1DhWXA9AdulMPoWc2LAZdCdTLEGn+vFMYEHHUgXYzeQBXA==
+
 "@types/keygrip@*":
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/@types/keygrip/-/keygrip-1.0.2.tgz#513abfd256d7ad0bf1ee1873606317b33b1b2a72"
@@ -3030,6 +3035,11 @@ jsonwebtoken@8.1.0:
     ms "^2.0.0"
     xtend "^4.0.1"
 
+jump.js@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/jump.js/-/jump.js-1.0.2.tgz#e0641b47f40a38f2139c25fda0500bf28e43015a"
+  integrity sha1-4GQbR/QKOPITnCX9oFAL8o5DAVo=
+
 jwa@^1.4.1:
   version "1.4.1"
   resolved "https://registry.yarnpkg.com/jwa/-/jwa-1.4.1.tgz#743c32985cb9e98655530d53641b66c8645b039a"
@@ -4582,18 +4592,6 @@ slice-ansi@^2.1.0:
     ansi-styles "^3.2.0"
     astral-regex "^1.0.0"
     is-fullwidth-code-point "^2.0.0"
-
-smartcrop-sharp@^2.0.3:
-  version "2.0.3"
-  resolved "https://registry.yarnpkg.com/smartcrop-sharp/-/smartcrop-sharp-2.0.3.tgz#1845e098fe38769ba04dcf9de65148a5da75dc2c"
-  integrity sha512-MZHImAELtI7KkzaXm3dL11hkkE8Ix0BTKzdV4zxaClcS7C+HAuh4BieGM9EJ/JkDzQ9F8rR04pNMB5uevFVOJg==
-  dependencies:
-    smartcrop "^2.0.2"
-
-smartcrop@^2.0.2:
-  version "2.0.3"
-  resolved "https://registry.yarnpkg.com/smartcrop/-/smartcrop-2.0.3.tgz#067aa8af6ebe0954e818f4cdce28a3f87579873e"
-  integrity sha512-EXkHPLf24H6KrYwCnUY+Y9ll+OPmFjmGc7wxiTfuUXt+WBXGTYR3qN5F3Df1Pk0TF/3rHCtOmPLQrvQ+QQOBWQ==
 
 snakeize@^0.1.0:
   version "0.1.0"
