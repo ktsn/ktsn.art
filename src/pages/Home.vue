@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <header class="px-5 lg:px-10 pt-2 mb-5">
+  <template v-if="!illusts.loading">
+    <header class="flex px-5 lg:px-10 pt-2 mb-5 w-full">
       <ul>
         <li v-for="(link, i) in illustLinks" :key="link" class="inline-block">
           <VTextLink
@@ -11,6 +11,39 @@
           </VTextLink>
 
           <span v-if="i < illustLinks.length - 1" class="px-1">/</span>
+        </li>
+      </ul>
+
+      <ul class="ml-auto">
+        <li class="inline-block">
+          <VTextLink
+            href="https://github.com/ktsn/illust.ktsn.dev"
+            target="_blank"
+          >
+            <img
+              class="inline aline-middle mr-1"
+              src="../assets/github.svg"
+              width="20"
+              height="20"
+              alt="GitHub logo"
+            />
+            <span class="align-middle">Source</span>
+          </VTextLink>
+
+          <span class="px-2 align-middle">/</span>
+        </li>
+
+        <li class="inline-block">
+          <VTextLink href="https://twitter.com/ktsn" target="_blank">
+            <img
+              class="inline aline-middle mr-1"
+              src="../assets/twitter.svg"
+              width="20"
+              height="20"
+              alt="Twitter logo"
+            />
+            <span class="align-middle">Author</span>
+          </VTextLink>
         </li>
       </ul>
     </header>
@@ -42,7 +75,7 @@
         </VThumbnailGroup>
       </ul>
     </section>
-  </div>
+  </template>
 
   <transition duration="200">
     <router-view />

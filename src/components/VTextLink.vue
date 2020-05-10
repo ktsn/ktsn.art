@@ -1,10 +1,11 @@
 <template>
-  <router-link
+  <component
+    :is="$attrs.to ? 'router-link' : 'a'"
     class="text-gray-600 hover:text-gray-900 transition duration-200 ease-out"
     v-bind="$attrs"
   >
     <slot />
-  </router-link>
+  </component>
 </template>
 
 <script lang="ts">
