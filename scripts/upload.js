@@ -2,12 +2,17 @@ const path = require('path')
 const firebase = require('firebase-admin')
 const sharp = require('sharp')
 
+const project =
+  process.env.NODE_ENV !== 'production'
+    ? 'illusts-ktsn-dev-development'
+    : 'illust-ktsn-dev'
+
 const serviceAccount = require('./serviceAccountKey.json')
 
 const firebaseConfig = {
   credential: firebase.credential.cert(serviceAccount),
-  databaseURL: 'https://illusts-ktsn-dev-development.firebaseio.com',
-  storageBucket: 'illusts-ktsn-dev-development.appspot.com',
+  databaseURL: `https://${project}.firebaseio.com`,
+  storageBucket: `${project}.appspot.com`,
 }
 
 const thumbnailSize = 300
