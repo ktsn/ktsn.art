@@ -42,10 +42,11 @@
             leave-active-class="transition-all duration-500"
             leave-to-class="blur-0"
           >
-            <img
+            <VImage
               v-if="!imageLoaded"
               class="absolute inset-0 w-full h-full object-contain blur"
               :src="illust.result.thumbnailUrl"
+              :src-fallback="illust.result.thumbnailFallbackUrl"
               alt=""
             />
           </transition>
@@ -54,10 +55,11 @@
             enter-active-class="transition duration-500 ease-out"
             enter-from-class="opacity-0"
           >
-            <img
+            <VImage
               v-show="imageLoaded"
               class="absolute inset-0 w-full h-full object-contain"
               :src="illust.result.displayUrl"
+              :src-fallback="illust.result.displayFallbackUrl"
               alt=""
               @load="imageLoaded = true"
             />
@@ -73,6 +75,7 @@ import { Vue, Options, setup } from 'vue-class-component'
 import { toRef } from 'vue'
 import { useRouter } from 'vue-router'
 import VButtonIcon from '../components/VButtonIcon.vue'
+import VImage from '../components/VImage.vue'
 import { useIllust } from '../composables/illusts'
 import { useImageDialog } from '../composables/image-dialog'
 
@@ -99,6 +102,7 @@ export default Options({
 
   components: {
     VButtonIcon,
+    VImage,
   },
 
   props: {

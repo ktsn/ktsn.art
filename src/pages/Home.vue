@@ -31,6 +31,7 @@
             <router-link class="block" :to="'/' + illust.key">
               <VThumbnail
                 :src="illust.thumbnailUrl"
+                :src-fallback="illust.thumbnailFallbackUrl"
                 :ratio="1 / 1"
                 :appear-delay="50 * index"
               />

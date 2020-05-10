@@ -33,29 +33,34 @@ module.exports = async function uploadIllust(
   const ext = path.extname(fileName)
   const originalPath = `illusts/${key}/original${ext}`
   const displayPath = `illusts/${key}/display.webp`
+  const displayFallbackPath = `illusts/${key}/display${ext}`
   const thumbnailPath = `illusts/${key}/thumbnail.webp`
-  const { width, height } = await sharp(originalImage).metadata()
+  const thumbnailFallbackPath = `illusts/${key}/thumbnail${ext}`
 
   // Convert images
   const displayImage = await sharp(originalImage).webp().toBuffer()
-  const thumbnailImage = await sharp(originalImage)
-    .resize(thumbnailSize, thumbnailSize, {
-      fit: 'outside',
-    })
-    .webp()
-    .toBuffer()
+  const displayFallbackImage = originalImage
+  const thumbnail = sharp(originalImage).resize(thumbnailSize, thumbnailSize, {
+    fit: 'outside',
+  })
+  const thumbnailImage = await thumbnail.webp().toBuffer()
+  const thumbnailFallbackImage = await thumbnail.toBuffer()
 
   await Promise.all([
     upload(originalPath, originalImage),
     upload(displayPath, displayImage),
+    upload(displayFallbackPath, displayFallbackImage),
     upload(thumbnailPath, thumbnailImage),
+    upload(thumbnailFallbackPath, thumbnailFallbackImage),
 
     // Save DB record
     newData.then(async (ref) => {
       await ref.set({
         originalImageUrl: storageUrl(originalPath),
         displayImageUrl: storageUrl(displayPath),
+        displayImageFallbackUrl: storageUrl(displayFallbackPath),
         thumbnailImageUrl: storageUrl(thumbnailPath),
+        thumbnailImageFallbackUrl: storageUrl(thumbnailFallbackPath),
         createdAt: createdAt.getTime(),
       })
     }),

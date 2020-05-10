@@ -9,11 +9,13 @@
       enter-from-class="opacity-0"
       enter-to-class="opacity-100"
     >
-      <img
+      <VImage
         v-show="manager.allLoaded"
+        v-bind="$attrs"
         class="absolute inset-0 w-full h-full object-cover"
         :style="{ transitionDelay: appearDelay + 'ms' }"
-        v-bind="$attrs"
+        :src="src"
+        :src-fallback="srcFallback"
         @load="manager.loaded()"
       />
     </transition>
@@ -22,11 +24,14 @@
 
 <script lang="ts">
 import { Vue, Options, setup } from 'vue-class-component'
+import VImage from './VImage.vue'
 import { useLoadingItem } from '../composables/loading-group'
 
 class VThumbnail extends Vue {
   ratio!: number
   appearDelay!: number
+  src!: string
+  srcFallback!: string
 
   manager = setup(() => useLoadingItem())
 
@@ -43,6 +48,10 @@ export default Options({
   name: 'VThumbnail',
   inheritAttrs: false,
 
+  components: {
+    VImage,
+  },
+
   props: {
     ratio: {
       type: Number,
@@ -52,6 +61,16 @@ export default Options({
     appearDelay: {
       type: Number,
       default: 0,
+    },
+
+    src: {
+      type: String,
+      required: true,
+    },
+
+    srcFallback: {
+      type: String,
+      required: true,
     },
   },
 })(VThumbnail)
@@ -71,10 +90,10 @@ export default Options({
   width: 75%;
   background-image: linear-gradient(
     90deg,
-    transparent 0,
+    rgba(255, 255, 255, 0) 0,
     #fff 40%,
     #fff 60%,
-    transparent
+    rgba(255, 255, 255, 0)
   );
   animation: 1000ms cubic-bezier(0.4, 0, 0.6, 1) infinite loading;
 }

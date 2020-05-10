@@ -5,7 +5,9 @@ export interface Illust {
   key: string
   originalUrl: string
   displayUrl: string
+  displayFallbackUrl: string
   thumbnailUrl: string
+  thumbnailFallbackUrl: string
   createdAt: Date
 }
 
@@ -64,7 +66,9 @@ function snapshotToIllust(snapshot: firebase.database.DataSnapshot): Illust {
     key: snapshot.key || '',
     originalUrl: data.originalImageUrl,
     displayUrl: data.displayImageUrl,
+    displayFallbackUrl: data.displayImageFallbackUrl,
     thumbnailUrl: data.thumbnailImageUrl,
+    thumbnailFallbackUrl: data.thumbnailImageFallbackUrl,
     createdAt: new Date(data.createdAt),
   }
 }
