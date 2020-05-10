@@ -43,7 +43,8 @@
             leave-to-class="blur-0"
           >
             <div
-              v-if="!imageLoaded"
+              v-if="!displayImageLoaded"
+              v-show="thumbnailImageLoaded"
               class="absolute inset-0 w-full h-full blur"
             >
               <VImage
@@ -51,6 +52,7 @@
                 :src="illust.result.thumbnailUrl"
                 :src-fallback="illust.result.thumbnailFallbackUrl"
                 alt=""
+                @load="thumbnailImageLoaded = true"
               />
             </div>
           </transition>
@@ -60,12 +62,12 @@
             enter-from-class="opacity-0"
           >
             <VImage
-              v-show="imageLoaded"
+              v-show="displayImageLoaded"
               class="absolute inset-0 w-full h-full object-contain"
               :src="illust.result.displayUrl"
               :src-fallback="illust.result.displayFallbackUrl"
               alt=""
-              @load="imageLoaded = true"
+              @load="displayImageLoaded = true"
             />
           </transition>
         </div>
@@ -92,7 +94,8 @@ class Illust extends Vue {
     const router = useRouter()
     return useImageDialog(() => router.push('/'))
   })
-  imageLoaded: boolean = false
+  thumbnailImageLoaded: boolean = false
+  displayImageLoaded: boolean = false
   leaving: boolean = false
 
   beforeRouteLeave(_to: unknown, _from: unknown, next: () => void) {
