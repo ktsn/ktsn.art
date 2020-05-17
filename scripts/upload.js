@@ -30,6 +30,8 @@ module.exports = async function uploadIllust(
   fileName,
   createdAt
 ) {
+  createdAt = createdAt || new Date()
+
   // Create DB record
   const illusts = db.ref('illusts')
   const newData = illusts.push()
