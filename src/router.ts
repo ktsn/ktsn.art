@@ -9,14 +9,12 @@ export const router = createRouter({
     {
       name: 'home',
       path: '/',
-      // FIXME: Hack for vue-router to work with vue-class-component
-      component: Home.__vccOpts,
+      component: Home,
       children: [
         {
           name: 'illust',
           path: ':illustKey',
-          // FIXME: Hack for vue-router to work with vue-class-component
-          component: Illust.__vccOpts,
+          component: Illust,
           props: true,
         },
       ],
