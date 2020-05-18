@@ -102,6 +102,20 @@ class Illust extends Vue {
     this.leaving = true
     next()
   }
+
+  mounted() {
+    // Prevent scrolling the base page
+    const el = document.documentElement
+    const scrollerWidth = window.innerWidth - el.offsetWidth
+    el.style.overflow = 'hidden'
+    el.style.paddingRight = scrollerWidth + 'px'
+  }
+
+  beforeUnmount() {
+    const el = document.documentElement
+    el.style.overflow = ''
+    el.style.paddingRight = ''
+  }
 }
 
 export default Options({
