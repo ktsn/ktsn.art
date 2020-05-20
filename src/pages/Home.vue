@@ -1,7 +1,8 @@
 <template>
   <template v-if="!illusts.loading">
     <header class="flex px-5 lg:px-10 pt-2 mb-5 w-full">
-      <ul>
+      <!-- FIXME: hide this area as it somehow causes hydration mismatch -->
+      <ul v-if="isMounted">
         <li v-for="(link, i) in illustLinks" :key="link" class="inline-block">
           <VRouterLink
             :to="'#year_' + link"
@@ -96,6 +97,7 @@ import { useIllusts, Illust } from '../composables/illusts'
 
 class Home extends Vue {
   illusts = setup(useIllusts)
+  isMounted = false
 
   get illustLinks() {
     return Array.from(this.illustGroups.keys()).sort((a, b) => b - a)
@@ -121,6 +123,10 @@ class Home extends Vue {
       })
 
     return groups
+  }
+
+  mounted() {
+    this.isMounted = true
   }
 
   onClickAnchor(to: string) {
