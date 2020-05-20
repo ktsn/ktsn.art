@@ -17,7 +17,7 @@
 
       <ul class="ml-auto">
         <li class="inline-block">
-          <VLink href="https://github.com/ktsn/illust.ktsn.dev" target="_blank">
+          <VLink href="https://github.com/ktsn/illust.ktsn.dev">
             <!--
               FIXME: hide this as SSR build cannot handle it
               <img
@@ -35,7 +35,7 @@
         </li>
 
         <li class="inline-block">
-          <VLink href="https://twitter.com/ktsn" target="_blank">
+          <VLink href="https://twitter.com/ktsn">
             <!--
               FIXME: hide this as SSR build cannot handle it
               <img
