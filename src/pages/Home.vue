@@ -66,8 +66,8 @@
         class="grid gap-1 grid-flow-row xl:grid-cols-6 lg:grid-cols-5 md:grid-cols-4 sm:grid-cols-3 grid-cols-2"
       >
         <VThumbnailGroup>
-          <li v-for="(illust, index) in group" :key="index">
-            <router-link class="block" :to="'/' + illust.key">
+          <li v-for="(illust, index) in group" :key="illust.key">
+            <router-link class="block" :to="'/' + illust.key + '/'">
               <VThumbnail
                 :src="illust.thumbnailUrl"
                 :src-fallback="illust.thumbnailFallbackUrl"
