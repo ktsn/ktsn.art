@@ -3,12 +3,12 @@
     <header class="flex px-5 lg:px-10 pt-2 mb-5 w-full">
       <ul>
         <li v-for="(link, i) in illustLinks" :key="link" class="inline-block">
-          <VTextLink
+          <VRouterLink
             :to="'#year_' + link"
             @click.prevent="onClickAnchor('#year_' + link)"
           >
             {{ link }}
-          </VTextLink>
+          </VRouterLink>
 
           <span v-if="i < illustLinks.length - 1" class="px-1">/</span>
         </li>
@@ -16,34 +16,37 @@
 
       <ul class="ml-auto">
         <li class="inline-block">
-          <VTextLink
-            href="https://github.com/ktsn/illust.ktsn.dev"
-            target="_blank"
-          >
-            <img
-              class="inline aline-middle mr-1"
-              src="../assets/github.svg"
-              width="20"
-              height="20"
-              alt="GitHub logo"
-            />
+          <VLink href="https://github.com/ktsn/illust.ktsn.dev" target="_blank">
+            <!--
+              FIXME: hide this as SSR build cannot handle it
+              <img
+                class="inline aline-middle mr-1"
+                src="../assets/github.svg"
+                width="20"
+                height="20"
+                alt="GitHub logo"
+              />
+            -->
             <span class="align-middle">Source</span>
-          </VTextLink>
+          </VLink>
 
           <span class="px-2 align-middle">/</span>
         </li>
 
         <li class="inline-block">
-          <VTextLink href="https://twitter.com/ktsn" target="_blank">
-            <img
-              class="inline aline-middle mr-1"
-              src="../assets/twitter.svg"
-              width="20"
-              height="20"
-              alt="Twitter logo"
-            />
+          <VLink href="https://twitter.com/ktsn" target="_blank">
+            <!--
+              FIXME: hide this as SSR build cannot handle it
+              <img
+                class="inline aline-middle mr-1"
+                src="../assets/twitter.svg"
+                width="20"
+                height="20"
+                alt="Twitter logo"
+              />
+            -->
             <span class="align-middle">Author</span>
-          </VTextLink>
+          </VLink>
         </li>
       </ul>
     </header>
@@ -85,7 +88,8 @@
 <script lang="ts">
 import { Vue, Options, setup } from 'vue-class-component'
 import jump from 'jump.js'
-import VTextLink from '../components/VTextLink.vue'
+import VRouterLink from '../components/VRouterLink.vue'
+import VLink from '../components/VLink.vue'
 import VThumbnail from '../components/VThumbnail.vue'
 import VThumbnailGroup from '../components/VThumbnailGroup.vue'
 import { useIllusts, Illust } from '../composables/illusts'
@@ -128,7 +132,8 @@ export default Options({
   name: 'Home',
 
   components: {
-    VTextLink,
+    VRouterLink,
+    VLink,
     VThumbnail,
     VThumbnailGroup,
   },

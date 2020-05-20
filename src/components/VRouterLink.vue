@@ -1,20 +1,19 @@
 <template>
-  <component
-    :is="$attrs.to ? 'router-link' : 'a'"
+  <router-link
     class="text-gray-600 hover:text-gray-900 transition duration-200 ease-out"
     v-bind="$attrs"
   >
     <slot />
-  </component>
+  </router-link>
 </template>
 
 <script lang="ts">
 import { Vue, Options } from 'vue-class-component'
 
-class VTextLink extends Vue {}
+class VRouterLink extends Vue {}
 
 export default Options({
-  name: 'VTextLink',
+  name: 'VRouterLink',
   inheritAttrs: false,
-})(VTextLink)
+})(VRouterLink)
 </script>
