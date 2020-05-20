@@ -88,6 +88,7 @@
 
 <script lang="ts">
 import { Vue, Options, setup } from 'vue-class-component'
+import { watch } from 'vue'
 import jump from 'jump.js'
 import VRouterLink from '../components/VRouterLink.vue'
 import VLink from '../components/VLink.vue'
@@ -127,6 +128,21 @@ class Home extends Vue {
 
   mounted() {
     this.isMounted = true
+  }
+
+  serverPrefetch() {
+    const illust = useIllusts()
+    if (!illust.loading.value) {
+      return Promise.resolve()
+    }
+
+    return new Promise((resolve) => {
+      watch(illust.loading, (value) => {
+        if (!value) {
+          resolve()
+        }
+      })
+    })
   }
 
   onClickAnchor(to: string) {
