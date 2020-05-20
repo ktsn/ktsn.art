@@ -45,14 +45,14 @@
             <div
               v-if="!displayImageLoaded"
               v-show="thumbnailImageLoaded"
-              class="absolute inset-0 w-full h-full blur"
+              class="absolute inset-0 blur"
             >
               <VImage
                 class="absolute inset-0 w-full h-full object-contain"
                 :src="illust.result.thumbnailUrl"
                 :src-fallback="illust.result.thumbnailFallbackUrl"
                 alt=""
-                @load="thumbnailImageLoaded = true"
+                @isoload="thumbnailImageLoaded = true"
               />
             </div>
           </transition>
@@ -61,14 +61,15 @@
             enter-active-class="transition duration-500 ease-out"
             enter-from-class="opacity-0"
           >
-            <VImage
-              v-show="displayImageLoaded"
-              class="absolute inset-0 w-full h-full object-contain"
-              :src="illust.result.displayUrl"
-              :src-fallback="illust.result.displayFallbackUrl"
-              alt=""
-              @load="displayImageLoaded = true"
-            />
+            <div v-show="displayImageLoaded" class="absolute inset-0">
+              <VImage
+                class="absolute inset-0 w-full h-full object-contain"
+                :src="illust.result.displayUrl"
+                :src-fallback="illust.result.displayFallbackUrl"
+                alt=""
+                @isoload="displayImageLoaded = true"
+              />
+            </div>
           </transition>
         </div>
       </router-link>
@@ -99,7 +100,10 @@ class Illust extends Vue {
   leaving: boolean = false
 
   beforeRouteLeave(_to: unknown, _from: unknown, next: () => void) {
-    this.leaving = true
+    // FIXME: Sometimes this becomes undefined...
+    if (this) {
+      this.leaving = true
+    }
     next()
   }
 

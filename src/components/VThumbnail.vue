@@ -9,15 +9,19 @@
       enter-from-class="opacity-0"
       enter-to-class="opacity-100"
     >
-      <VImage
+      <div
         v-show="manager.allLoaded"
-        v-bind="$attrs"
-        class="absolute inset-0 w-full h-full object-cover"
+        class="absolute inset-0"
         :style="{ transitionDelay: appearDelay + 'ms' }"
-        :src="src"
-        :src-fallback="srcFallback"
-        @load="manager.loaded()"
-      />
+      >
+        <VImage
+          v-bind="$attrs"
+          class="absolute inset-0 w-full h-full object-cover"
+          :src="src"
+          :src-fallback="srcFallback"
+          @isoload="manager.loaded()"
+        />
+      </div>
     </transition>
   </div>
 </template>

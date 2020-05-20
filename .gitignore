@@ -1,4 +1,5 @@
 node_modules/
 dist/
+dist-ssr/
 dry_run/
 /scripts/serviceAccountKey.json

@@ -30,6 +30,8 @@ const firebaseConfig = __DEV__
 if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig)
 }
-firebase.analytics()
+if (firebase.analytics) {
+  firebase.analytics()
+}
 
 export const db = firebase.database()

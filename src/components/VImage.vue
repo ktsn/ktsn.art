@@ -2,17 +2,43 @@
   <picture>
     <source :srcset="src" type="image/webp" />
     <source :srcset="srcFallback" />
-    <img :src="srcFallback" v-bind="$attrs" />
+    <img v-load="onLoad" :src="srcFallback" v-bind="$attrs" />
   </picture>
 </template>
 
 <script lang="ts">
 import { Vue, Options } from 'vue-class-component'
+import { Directive } from 'vue'
 
-class VImage extends Vue {}
+/**
+ * FIXME: using directive because HTMLElement is not injected into $refs on hydration sometimes.
+ */
+const load: Directive<HTMLImageElement> = {
+  mounted(el, { value }) {
+    if (el.complete) {
+      value()
+    }
+
+    el.addEventListener('load', value)
+  },
+
+  unmounted(el, { value }) {
+    el.removeEventListener('load', value)
+  },
+}
+
+class VImage extends Vue {
+  onLoad() {
+    this.$emit('isoload')
+  }
+}
 
 export default Options({
   name: 'VImage',
+
+  directives: {
+    load,
+  },
 
   props: {
     src: {
