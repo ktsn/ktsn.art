@@ -27,7 +27,7 @@ export function useStore(): Store {
 
 export function createStore() {
   const state = reactive<StoreState>(
-    (inBrowser && window.__INITAL_STATE__) || {
+    (inBrowser && window.__INITIAL_STATE__) || {
       illusts: {},
       listLoaded: false,
     }
