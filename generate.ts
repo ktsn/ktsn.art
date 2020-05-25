@@ -39,14 +39,20 @@ async function generatePages(options: GenerateOptions) {
 
   await Promise.all(
     routes.map(async (route) => {
-      const { app, router } = createApp(true)
+      const { app, router, store } = createApp(true)
       await router.push(route)
       const content = await renderToString(app)
 
       const replacedHtml = baseHtml.replace(
         '<div id="app"></div>',
-        `<div id="app">${content}</div>`
+        // Render HTML
+        `<div id="app">${content}</div>` +
+          // Inject store state
+          `<script>window.__INITIAL_STATE__ = ${JSON.stringify(
+            store.state
+          )}</script>`
       )
+
       const output = path.join(dir, route, 'index.html')
       await fse.outputFile(output, replacedHtml)
       console.log('Wrote: ' + output)

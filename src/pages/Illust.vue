@@ -120,6 +120,11 @@ class Illust extends Vue {
     el.style.overflow = ''
     el.style.paddingRight = ''
   }
+
+  serverPrefetch() {
+    const key = this.$route.params.illustKey as string
+    return this.$store.fetchIllust(key)
+  }
 }
 
 export default Options({
