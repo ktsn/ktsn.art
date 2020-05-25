@@ -16,6 +16,7 @@ console.log('Uploading: ' + filePath)
 upload(data, fileName)
   .then(() => {
     console.log('Finished: ' + filePath)
+    process.exit(0)
   })
   .catch((error) => {
     console.error(error)
