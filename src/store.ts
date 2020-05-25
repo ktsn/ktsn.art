@@ -2,18 +2,22 @@ import { db } from './firebase'
 import { computed, reactive, InjectionKey, inject, App } from 'vue'
 import { inBrowser } from './env'
 
-export interface Illust {
+export interface RawIllust {
   key: string
   originalUrl: string
   displayUrl: string
   displayFallbackUrl: string
   thumbnailUrl: string
   thumbnailFallbackUrl: string
+  createdAt: number
+}
+
+export interface Illust extends Omit<RawIllust, 'createdAt'> {
   createdAt: Date
 }
 
 export interface StoreState {
-  illusts: Record<string, Illust>
+  illusts: Record<string, RawIllust>
   listLoaded: boolean
 }
 
@@ -33,12 +37,25 @@ export function createStore() {
     }
   )
 
-  const illusts = computed(() => {
-    return Object.keys(state.illusts)
-      .map((key) => state.illusts[key])
-      .sort((a, b) => {
-        return b.createdAt.getTime() - a.createdAt.getTime()
+  const illustMap = computed(() => {
+    return new Map<string, Illust>(
+      Object.keys(state.illusts).map((key) => {
+        const raw = state.illusts[key]
+        return [
+          key,
+          {
+            ...raw,
+            createdAt: new Date(raw.createdAt),
+          },
+        ]
       })
+    )
+  })
+
+  const illusts = computed(() => {
+    return Array.from(illustMap.value.values()).sort((a, b) => {
+      return b.createdAt.getTime() - a.createdAt.getTime()
+    })
   })
 
   async function fetchIllusts() {
@@ -51,7 +68,7 @@ export function createStore() {
         .orderByChild('createdAt')
         .once('value', (snapshot) => {
           snapshot.forEach((illustRef) => {
-            const illust = snapshotToIllust(illustRef)
+            const illust = snapshotToRawIllust(illustRef)
             state.illusts[illust.key] = illust
           })
           state.listLoaded = true
@@ -60,8 +77,12 @@ export function createStore() {
     })
   }
 
+  const illust = computed(() => (key: string) => {
+    return illustMap.value.get(key)
+  })
+
   async function fetchIllust(key: string) {
-    const illust = state.illusts[key] as Illust | undefined
+    const illust = state.illusts[key] as RawIllust | undefined
 
     if (illust) {
       return
@@ -69,7 +90,7 @@ export function createStore() {
 
     return new Promise((resolve) => {
       db.ref(`illusts/${key}`).once('value', (snapshot) => {
-        const data = snapshotToIllust(snapshot)
+        const data = snapshotToRawIllust(snapshot)
         state.illusts[data.key] = data
         resolve()
       })
@@ -79,6 +100,7 @@ export function createStore() {
   const store = {
     state,
     illusts,
+    illust,
     fetchIllusts,
     fetchIllust,
 
@@ -91,7 +113,9 @@ export function createStore() {
   return store
 }
 
-function snapshotToIllust(snapshot: firebase.database.DataSnapshot): Illust {
+function snapshotToRawIllust(
+  snapshot: firebase.database.DataSnapshot
+): RawIllust {
   const data = snapshot.val()
 
   return {
@@ -101,7 +125,7 @@ function snapshotToIllust(snapshot: firebase.database.DataSnapshot): Illust {
     displayFallbackUrl: data.displayImageFallbackUrl,
     thumbnailUrl: data.thumbnailImageUrl,
     thumbnailFallbackUrl: data.thumbnailImageFallbackUrl,
-    createdAt: new Date(data.createdAt),
+    createdAt: data.createdAt,
   }
 }
 

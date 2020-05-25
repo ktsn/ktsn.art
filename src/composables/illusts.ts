@@ -1,5 +1,5 @@
 import { ref, Ref, computed, watchEffect } from 'vue'
-import { useStore, Illust } from '../store'
+import { useStore } from '../store'
 
 export function useIllusts() {
   const store = useStore()
@@ -19,9 +19,7 @@ export function useIllusts() {
 
 export function useIllust(key: Ref<string>) {
   const store = useStore()
-  const illust = computed(
-    () => store.state.illusts[key.value] as Illust | undefined
-  )
+  const illust = computed(() => store.illust.value(key.value))
 
   watchEffect(() => {
     store.fetchIllust(key.value)
