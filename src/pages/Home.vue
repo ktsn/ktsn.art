@@ -88,13 +88,13 @@
 
 <script lang="ts">
 import { Vue, Options, setup } from 'vue-class-component'
-import { watch } from 'vue'
 import jump from 'jump.js'
 import VRouterLink from '../components/VRouterLink.vue'
 import VLink from '../components/VLink.vue'
 import VThumbnail from '../components/VThumbnail.vue'
 import VThumbnailGroup from '../components/VThumbnailGroup.vue'
-import { useIllusts, Illust } from '../composables/illusts'
+import { useIllusts } from '../composables/illusts'
+import { Illust } from '../store'
 
 class Home extends Vue {
   illusts = setup(useIllusts)
@@ -131,18 +131,7 @@ class Home extends Vue {
   }
 
   serverPrefetch() {
-    const illust = useIllusts()
-    if (!illust.loading.value) {
-      return Promise.resolve()
-    }
-
-    return new Promise((resolve) => {
-      watch(illust.loading, (value) => {
-        if (!value) {
-          resolve()
-        }
-      })
-    })
+    return this.$store.fetchIllusts()
   }
 
   onClickAnchor(to: string) {

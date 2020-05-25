@@ -3,12 +3,14 @@ import {
   createWebHistory,
   createMemoryHistory,
   Router,
+  RouteLocationNormalizedLoaded,
 } from 'vue-router'
 import Home from './pages/Home.vue'
 import Illust from './pages/Illust.vue'
 import { inBrowser } from './env'
+import { Store } from './store'
 
-export function createRouter(_isSsr: boolean) {
+export function createRouter(store: Store, isSsr: boolean) {
   const router = _createRouter({
     history: inBrowser ? createWebHistory() : createMemoryHistory(),
 
@@ -33,6 +35,14 @@ export function createRouter(_isSsr: boolean) {
     ],
   })
 
+  if (isSsr) {
+    setServerPrefetchHook(router, store)
+  }
+
+  return router
+}
+
+function setServerPrefetchHook(router: Router, store: Store) {
   router.beforeResolve(async (to, _from, next) => {
     const matched = to.matched
     Promise.all(
@@ -49,7 +59,11 @@ export function createRouter(_isSsr: boolean) {
               return
             }
 
-            await serverPrefetch()
+            await serverPrefetch.call({
+              $router: router,
+              $route: router.currentRoute.value,
+              $store: store,
+            })
           })
         )
       })
@@ -62,12 +76,11 @@ export function createRouter(_isSsr: boolean) {
       }
     )
   })
-
-  return router
 }
 
 declare module '@vue/runtime-core' {
   interface ComponentCustomProperties {
     $router: Router
+    $route: RouteLocationNormalizedLoaded
   }
 }
