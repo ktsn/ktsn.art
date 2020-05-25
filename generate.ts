@@ -30,7 +30,10 @@ async function generatePages(options: GenerateOptions) {
   )!
   const { createApp } = require('./' + path.join('dist-ssr', ssrBundlePath))
 
-  const baseHtml = await fse.readFile(options.baseHtmlPath, 'utf8')
+  const baseHtml = (await fse.readFile(options.baseHtmlPath, 'utf8')).replace(
+    /<script ([^>]*)>/g,
+    '<script async $1>'
+  )
   const dir = options.outputDir
   const routes = await options.routes()
 
