@@ -11,7 +11,7 @@ export interface Illust {
   createdAt: Date
 }
 
-const illusts = /*#__PURE__*/ ref(new Map<string, Illust>())
+const illusts = /*#__PURE__*/ ref<Record<string, Illust>>({})
 const listLoaded = /*#__PURE__*/ ref(false)
 
 export function useIllusts() {
@@ -23,7 +23,7 @@ export function useIllusts() {
       .once('value', (snapshot) => {
         snapshot.forEach((illustRef) => {
           const illust = snapshotToIllust(illustRef)
-          illusts.value.set(illust.key, illust)
+          illusts.value[illust.key] = illust
         })
         loading.value = false
         listLoaded.value = true
@@ -32,16 +32,18 @@ export function useIllusts() {
 
   return {
     result: computed(() => {
-      return Array.from(illusts.value.values()).sort((a, b) => {
-        return b.createdAt.getTime() - a.createdAt.getTime()
-      })
+      return Object.keys(illusts.value)
+        .map((key) => illusts.value[key])
+        .sort((a, b) => {
+          return b.createdAt.getTime() - a.createdAt.getTime()
+        })
     }),
     loading,
   }
 }
 
 export function useIllust(key: Ref<string>) {
-  const illust = computed(() => illusts.value.get(key.value))
+  const illust = computed(() => illusts.value[key.value] as Illust | undefined)
 
   watchEffect(() => {
     if (illust.value) {
@@ -50,7 +52,7 @@ export function useIllust(key: Ref<string>) {
 
     db.ref(`illusts/${key.value}`).once('value', (snapshot) => {
       const data = snapshotToIllust(snapshot)
-      illusts.value.set(data.key, data)
+      illusts.value[data.key] = data
     })
   })
 
