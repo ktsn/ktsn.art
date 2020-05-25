@@ -130,7 +130,11 @@ class Home extends Vue {
     this.isMounted = true
   }
 
-  serverPrefetch() {
+  async serverPrefetch() {
+    // Do not fetch entire list if it is illust detail page
+    if (this.$route.name !== 'home') {
+      return
+    }
     return this.$store.fetchIllusts()
   }
 

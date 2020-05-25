@@ -61,7 +61,7 @@ function setServerPrefetchHook(router: Router, store: Store) {
 
             await serverPrefetch.call({
               $router: router,
-              $route: router.currentRoute.value,
+              $route: to,
               $store: store,
             })
           })
