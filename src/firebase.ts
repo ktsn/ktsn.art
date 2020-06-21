@@ -4,28 +4,16 @@ import 'firebase/analytics'
 
 const firebase = (_firebase as any).default as typeof _firebase
 
-// TODO: move the config to env vars
-const firebaseConfig = __DEV__
-  ? {
-      apiKey: 'AIzaSyAFdt0Q1I55BGnoAm6e_sPD6uog9P3FxRo',
-      authDomain: 'illusts-ktsn-dev-development.firebaseapp.com',
-      databaseURL: 'https://illusts-ktsn-dev-development.firebaseio.com',
-      projectId: 'illusts-ktsn-dev-development',
-      storageBucket: 'illusts-ktsn-dev-development.appspot.com',
-      messagingSenderId: '317423780761',
-      appId: '1:317423780761:web:0df9a213898852af200908',
-      measurementId: 'G-WZZTX7308Y',
-    }
-  : {
-      apiKey: 'AIzaSyDY9ZeVVWzdIPQL12vKAN_SxWsazxo63SU',
-      authDomain: 'illust-ktsn-dev.firebaseapp.com',
-      databaseURL: 'https://illust-ktsn-dev.firebaseio.com',
-      projectId: 'illust-ktsn-dev',
-      storageBucket: 'illust-ktsn-dev.appspot.com',
-      messagingSenderId: '182006812020',
-      appId: '1:182006812020:web:d39a3fba26465f39c9f021',
-      measurementId: 'G-1JNZFCG5YL',
-    }
+const firebaseConfig = {
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  databaseURL: import.meta.env.VITE_FIREBASE_DATABASE_URL,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID,
+  measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID,
+}
 
 if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig)
@@ -35,3 +23,9 @@ if (firebase.analytics) {
 }
 
 export const db = firebase.database()
+
+declare global {
+  interface ImportMeta {
+    env: Record<string, any>
+  }
+}

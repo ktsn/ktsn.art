@@ -9,7 +9,7 @@ import { inBrowser } from './env'
 export function createApp(isSsr = false) {
   const store = createStore()
   const router = createRouter(store, isSsr)
-  const app = __DEV__ ? createClientApp(App) : createSSRApp(App)
+  const app = import.meta.env.DEV ? createClientApp(App) : createSSRApp(App)
 
   app.use(router)
   app.use(store)
