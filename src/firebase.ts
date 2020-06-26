@@ -23,9 +23,3 @@ if (firebase.analytics) {
 }
 
 export const db = firebase.database()
-
-declare global {
-  interface ImportMeta {
-    env: Record<string, any>
-  }
-}
