@@ -100,10 +100,7 @@ class Illust extends Vue {
   leaving: boolean = false
 
   beforeRouteLeave(_to: unknown, _from: unknown, next: () => void) {
-    // FIXME: Sometimes this becomes undefined...
-    if (this) {
-      this.leaving = true
-    }
+    this.leaving = true
     next()
   }
 
