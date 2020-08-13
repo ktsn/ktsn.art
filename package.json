@@ -8,26 +8,26 @@
     "lint": "eslint --ext ts,vue ."
   },
   "dependencies": {
-    "firebase": "^7.14.2",
+    "firebase": "^7.17.2",
     "jump.js": "^1.0.2",
-    "tailwindcss": "^1.4.5",
-    "vue": "^3.0.0-beta.15",
+    "tailwindcss": "^1.6.2",
+    "vue": "^3.0.0-rc.5",
     "vue-class-component": "^8.0.0-alpha.6",
-    "vue-router": "^4.0.0-alpha.13"
+    "vue-router": "^4.0.0-beta.6"
   },
   "devDependencies": {
-    "@google-cloud/storage": "^4.7.0",
+    "@google-cloud/storage": "^5.2.0",
     "@types/jump.js": "^1.0.3",
-    "@vue/compiler-sfc": "^3.0.0-beta.15",
-    "@vue/server-renderer": "^3.0.0-beta.15",
-    "eslint": "^6.8.0",
+    "@vue/compiler-sfc": "^3.0.0-rc.5",
+    "@vue/server-renderer": "^3.0.0-rc.5",
+    "eslint": "^7.6.0",
     "eslint-config-ktsn-vue": "^2.1.0",
-    "firebase-admin": "^8.12.0",
-    "fs-extra": "^9.0.0",
+    "firebase-admin": "^9.0.0",
+    "fs-extra": "^9.0.1",
     "prettier": "^2.0.5",
-    "sharp": "^0.25.2",
-    "ts-node": "^8.10.1",
-    "typescript": "^3.8.3",
-    "vite": "^1.0.0-beta.8"
+    "sharp": "^0.25.4",
+    "ts-node": "^8.10.2",
+    "typescript": "^3.9.7",
+    "vite": "^1.0.0-rc.4"
   }
 }
