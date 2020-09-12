@@ -81,9 +81,11 @@
     </section>
   </template>
 
-  <transition duration="200">
-    <router-view />
-  </transition>
+  <router-view v-slot="{ Component }">
+    <transition duration="200">
+      <component :is="Component" />
+    </transition>
+  </router-view>
 </template>
 
 <script lang="ts">
