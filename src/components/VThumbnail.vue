@@ -27,16 +27,33 @@
 </template>
 
 <script lang="ts">
-import { Vue, Options, setup } from 'vue-class-component'
+import { Options, props, setup } from 'vue-class-component'
 import VImage from './VImage.vue'
 import { useLoadingItem } from '../composables/loading-group'
 
-class VThumbnail extends Vue {
-  ratio!: number
-  appearDelay!: number
-  src!: string
-  srcFallback!: string
+const Props = props({
+  ratio: {
+    type: Number,
+    default: 1,
+  },
 
+  appearDelay: {
+    type: Number,
+    default: 0,
+  },
+
+  src: {
+    type: String,
+    required: true,
+  },
+
+  srcFallback: {
+    type: String,
+    required: true,
+  },
+})
+
+class VThumbnail extends Props {
   manager = setup(() => useLoadingItem())
 
   $refs!: {
@@ -54,28 +71,6 @@ export default Options({
 
   components: {
     VImage,
-  },
-
-  props: {
-    ratio: {
-      type: Number,
-      default: 1,
-    },
-
-    appearDelay: {
-      type: Number,
-      default: 0,
-    },
-
-    src: {
-      type: String,
-      required: true,
-    },
-
-    srcFallback: {
-      type: String,
-      required: true,
-    },
   },
 })(VThumbnail)
 </script>

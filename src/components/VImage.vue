@@ -7,9 +7,25 @@
 </template>
 
 <script lang="ts">
-import { Vue, Options } from 'vue-class-component'
+import { props, emits, mixins } from 'vue-class-component'
 
-class VImage extends Vue {
+const Props = props({
+  src: {
+    type: String,
+    required: true,
+  },
+
+  srcFallback: {
+    type: String,
+    required: true,
+  },
+})
+
+const Emits = emits({
+  isoload: () => true,
+})
+
+export default class VImage extends mixins(Props, Emits) {
   $refs!: {
     image?: HTMLImageElement
   }
@@ -25,20 +41,4 @@ class VImage extends Vue {
     }
   }
 }
-
-export default Options({
-  name: 'VImage',
-
-  props: {
-    src: {
-      type: String,
-      required: true,
-    },
-
-    srcFallback: {
-      type: String,
-      required: true,
-    },
-  },
-})(VImage)
 </script>
