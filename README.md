@@ -1,6 +1,6 @@
-# illust.ktsn.dev
+# ktsn.art
 
-https://illust.ktsn.dev
+https://ktsn.art
 
 ## License
 

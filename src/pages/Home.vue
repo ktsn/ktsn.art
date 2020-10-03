@@ -17,7 +17,7 @@
 
       <ul class="ml-auto">
         <li class="inline-block">
-          <VLink href="https://github.com/ktsn/illust.ktsn.dev">
+          <VLink href="https://github.com/ktsn/ktsn.art">
             <!--
               FIXME: hide this as SSR build cannot handle it
               <img
