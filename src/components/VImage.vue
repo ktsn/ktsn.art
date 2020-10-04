@@ -7,25 +7,21 @@
 </template>
 
 <script lang="ts">
-import { props, emits, mixins } from 'vue-class-component'
+import { Vue, prop } from 'vue-class-component'
 
-const Props = props({
-  src: {
+class Props {
+  src = prop({
     type: String,
     required: true,
-  },
+  })
 
-  srcFallback: {
+  srcFallback = prop({
     type: String,
     required: true,
-  },
-})
+  })
+}
 
-const Emits = emits({
-  isoload: () => true,
-})
-
-export default class VImage extends mixins(Props, Emits) {
+export default class VImage extends Vue.props(Props) {
   $refs!: {
     image?: HTMLImageElement
   }

@@ -78,7 +78,7 @@
 </template>
 
 <script lang="ts">
-import { Options, props, setup } from 'vue-class-component'
+import { Options, Vue, prop, setup } from 'vue-class-component'
 import { toRef } from 'vue'
 import { useRouter } from 'vue-router'
 import VButtonIcon from '../components/VButtonIcon.vue'
@@ -86,14 +86,22 @@ import VImage from '../components/VImage.vue'
 import { useIllust } from '../composables/illusts'
 import { useImageDialog } from '../composables/image-dialog'
 
-const Props = props({
-  illustKey: {
+class Props {
+  illustKey = prop({
     type: String,
     required: true,
+  })
+}
+
+@Options({
+  name: 'Illust',
+
+  components: {
+    VButtonIcon,
+    VImage,
   },
 })
-
-class Illust extends Props {
+export default class Illust extends Vue.props(Props) {
   illust = setup(() => useIllust(toRef(this, 'illustKey')))
 
   dialog = setup(() => {
@@ -128,15 +136,6 @@ class Illust extends Props {
     return this.$store.fetchIllust(key)
   }
 }
-
-export default Options({
-  name: 'Illust',
-
-  components: {
-    VButtonIcon,
-    VImage,
-  },
-})(Illust)
 </script>
 
 <style scoped>

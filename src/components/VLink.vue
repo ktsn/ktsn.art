@@ -11,23 +11,22 @@
 </template>
 
 <script lang="ts">
-import { Options, props } from 'vue-class-component'
+import { Options, Vue, prop } from 'vue-class-component'
 
-const Props = props({
-  href: {
+class Props {
+  href = prop({
     type: String,
     required: true,
-  },
-})
+  })
+}
 
-class VLink extends Props {
+@Options({
+  name: 'VLink',
+  inheritAttrs: false,
+})
+export default class VLink extends Vue.props(Props) {
   get isExternal(): boolean {
     return /^(?:https?:)?\/\//.test(this.href)
   }
 }
-
-export default Options({
-  name: 'VLink',
-  inheritAttrs: false,
-})(VLink)
 </script>
