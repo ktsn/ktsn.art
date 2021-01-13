@@ -93,15 +93,7 @@ class Props {
   })
 }
 
-@Options({
-  name: 'Illust',
-
-  components: {
-    VButtonIcon,
-    VImage,
-  },
-})
-export default class Illust extends Vue.props(Props) {
+class Illust extends Vue.props(Props) {
   illust = setup(() => useIllust(toRef(this, 'illustKey')))
 
   dialog = setup(() => {
@@ -136,6 +128,15 @@ export default class Illust extends Vue.props(Props) {
     return this.$store.fetchIllust(key)
   }
 }
+
+export default Options({
+  name: 'Illust',
+
+  components: {
+    VButtonIcon,
+    VImage,
+  },
+})(Illust)
 </script>
 
 <style scoped>

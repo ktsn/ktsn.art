@@ -20,13 +20,14 @@ class Props {
   })
 }
 
-@Options({
-  name: 'VLink',
-  inheritAttrs: false,
-})
-export default class VLink extends Vue.props(Props) {
+class VLink extends Vue.props(Props) {
   get isExternal(): boolean {
     return /^(?:https?:)?\/\//.test(this.href)
   }
 }
+
+export default Options({
+  name: 'VLink',
+  inheritAttrs: false,
+})(VLink)
 </script>

@@ -53,15 +53,7 @@ class Props {
   })
 }
 
-@Options({
-  name: 'VThumbnail',
-  inheritAttrs: false,
-
-  components: {
-    VImage,
-  },
-})
-export default class VThumbnail extends Vue.props(Props) {
+class VThumbnail extends Vue.props(Props) {
   manager = setup(() => useLoadingItem())
 
   $refs!: {
@@ -72,6 +64,15 @@ export default class VThumbnail extends Vue.props(Props) {
     return 100 / this.ratio + '%'
   }
 }
+
+export default Options({
+  name: 'VThumbnail',
+  inheritAttrs: false,
+
+  components: {
+    VImage,
+  },
+})(VThumbnail)
 </script>
 
 <style scoped>
