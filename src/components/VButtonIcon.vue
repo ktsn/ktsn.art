@@ -10,9 +10,10 @@
 <script lang="ts">
 import { Vue, Options } from 'vue-class-component'
 
-@Options({
+class VButtonIcon extends Vue {}
+
+export default Options({
   name: 'VButtonIcon',
   inheritAttrs: false,
-})
-export default class VButtonIcon extends Vue {}
+})(VButtonIcon)
 </script>

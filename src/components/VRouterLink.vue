@@ -10,9 +10,10 @@
 <script lang="ts">
 import { Vue, Options } from 'vue-class-component'
 
-@Options({
+class VRouterLink extends Vue {}
+
+export default Options({
   name: 'VRouterLink',
   inheritAttrs: false,
-})
-export default class VRouterLink extends Vue {}
+})(VRouterLink)
 </script>
