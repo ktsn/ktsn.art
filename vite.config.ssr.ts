@@ -8,6 +8,7 @@ const config = defineConfig({
 
   plugins: [
     vue({
+      ssr: true,
       template: {
         compilerOptions: {
           directiveTransforms: {
@@ -31,7 +32,7 @@ const config = defineConfig({
         format: 'cjs',
       },
       preserveEntrySignatures: 'allow-extension',
-      external: ['firebase/app', 'firebase/database'],
+      external: ['vue', 'firebase/app', 'firebase/database'],
       treeshake: {
         moduleSideEffects: true,
       },
