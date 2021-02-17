@@ -43,9 +43,9 @@ export function createRouter(store: Store, isSsr: boolean) {
 }
 
 function setServerPrefetchHook(router: Router, store: Store) {
-  router.beforeResolve(async (to, _from, next) => {
+  router.beforeResolve(async (to, _from) => {
     const matched = to.matched
-    Promise.all(
+    await Promise.all(
       matched.map((m) => {
         const comps = Object.keys(m.components).map((key) => {
           const c = m.components[key]
@@ -67,13 +67,6 @@ function setServerPrefetchHook(router: Router, store: Store) {
           })
         )
       })
-    ).then(
-      () => {
-        next()
-      },
-      (error) => {
-        next(error)
-      }
     )
   })
 }

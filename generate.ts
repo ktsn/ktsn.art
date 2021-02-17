@@ -25,11 +25,10 @@ interface GenerateOptions {
 }
 
 async function generatePages(options: GenerateOptions) {
-  const ssrBundlePath = (await fse.readdir('dist-ssr/assets')).find((f) =>
+  const ssrBundlePath = (await fse.readdir('dist-ssr')).find((f) =>
     f.endsWith('.js')
   )!
-  const { createApp } = require('./' +
-    path.join('dist-ssr/assets', ssrBundlePath))
+  const { createApp } = require('./' + path.join('dist-ssr', ssrBundlePath))
 
   const baseHtml = (await fse.readFile(options.baseHtmlPath, 'utf8')).replace(
     /<script ([^>]*)>/g,
