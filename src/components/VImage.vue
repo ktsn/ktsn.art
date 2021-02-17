@@ -21,7 +21,7 @@ class Props {
   })
 }
 
-export default class VImage extends Vue.props(Props) {
+export default class VImage extends Vue.with(Props) {
   $refs!: {
     image?: HTMLImageElement
   }

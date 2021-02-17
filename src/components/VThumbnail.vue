@@ -53,7 +53,7 @@ class Props {
   })
 }
 
-class VThumbnail extends Vue.props(Props) {
+class VThumbnail extends Vue.with(Props) {
   manager = setup(() => useLoadingItem())
 
   $refs!: {

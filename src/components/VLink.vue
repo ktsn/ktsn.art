@@ -20,7 +20,7 @@ class Props {
   })
 }
 
-class VLink extends Vue.props(Props) {
+class VLink extends Vue.with(Props) {
   get isExternal(): boolean {
     return /^(?:https?:)?\/\//.test(this.href)
   }

@@ -93,7 +93,7 @@ class Props {
   })
 }
 
-class Illust extends Vue.props(Props) {
+class Illust extends Vue.with(Props) {
   illust = setup(() => useIllust(toRef(this, 'illustKey')))
 
   dialog = setup(() => {
